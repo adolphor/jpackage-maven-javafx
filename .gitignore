@@ -2,3 +2,6 @@
 .DS_Store
 target
 *.iml
+convert/classes
+convert/out
+convert/work
