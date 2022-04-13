@@ -21,6 +21,7 @@
     <runtime-image>runtime-image</runtime-image>
     <main-jar-name>${project.name}-${project.version}.jar</main-jar-name>
     <main-class>com.example.javafx.HelloApplication</main-class>
+    <package-type>PLATFORM</package-type>
   </properties>
 
   <dependencies>
@@ -183,7 +184,7 @@
             <groupId>com.github.akman</groupId>
             <artifactId>jpackage-maven-plugin</artifactId>
             <configuration>
-              <type>PLATFORM</type>
+              <type>${package-type}</type>
               <icon>jpackage/logo/macosx/duke.icns</icon>
             </configuration>
           </plugin>
@@ -204,7 +205,7 @@
             <groupId>com.github.akman</groupId>
             <artifactId>jpackage-maven-plugin</artifactId>
             <configuration>
-              <type>PLATFORM</type>
+              <type>${package-type}</type>
               <icon>jpackage/logo/linux/duke.png</icon>
             </configuration>
           </plugin>
@@ -225,7 +226,7 @@
             <groupId>com.github.akman</groupId>
             <artifactId>jpackage-maven-plugin</artifactId>
             <configuration>
-              <type>PLATFORM</type>
+              <type>${package-type}</type>
               <icon>jpackage/logo/linux/duke.png</icon>
             </configuration>
           </plugin>
