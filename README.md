@@ -2,7 +2,8 @@
 
 ## Prerequisites
 * OpenJDK 17 Installation (https://jdk.java.net/17/)
-* On Windows you need to have the WIX toolset installed (https://wixtoolset.org)
+* On macOS [XCode](https://developer.apple.com/download/all/?q=for%20Xcode) is required.
+* On Windows the free [WiX Toolset](https://wixtoolset.org) is required.
 
 ## System Environment
 All operating system must be set environment variables below:
@@ -13,14 +14,19 @@ The platform-specific icons can be found inside `hello-jpackage/jpackage/logo`.
 
 ## Usage
 
-* Build current system installer automatic
+To do everything up until the actual installer generation (including generating the custom JVM):
+```
+mvn clean package
+```
+
+To generate an installer:
 ```
 mvn clean install
 ```
 
-* Build specified system installer
+To generate a specific installer:
 ```
-mvn clean install -P build-mac
+mvn clean install -P build-mac -Dtype=apk
 ```
 
 # Links
