@@ -39,6 +39,9 @@ cd convert
 jdeps --list-deps out/commons.lang.jar
 ```
 
+# gluonfx：native app
+暂未成功
+
 # Links
 * [Oracle JDK 17 jpackage](https://docs.oracle.com/en/java/javase/17/jpackage/)
 * [jpackage-maven-plugin](https://github.com/Akman/jpackage-maven-plugin)
