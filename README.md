@@ -45,3 +45,4 @@ jdeps --list-deps out/commons.lang.jar
 * [maven-jpackage-template](https://github.com/wiverson/maven-jpackage-template)
 * [JPackageScriptFX](https://github.com/dlemmermann/JPackageScriptFX)
 * [Convert commons-lang jar to a module](https://github.com/codetojoy/easter_eggs_for_java_9/tree/master/egg_21_JLink_With_Converted_Jar)
+* [JavaFx Tips](https://www.javacodegeeks.com/author/dirk-lemmermann)

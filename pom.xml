@@ -15,6 +15,7 @@
 
     <javafx.version>17.0.2</javafx.version>
     <junit.version>5.7.1</junit.version>
+    <logback.version>1.3.0-alpha14</logback.version>
 
     <client.version>1.0.0</client.version>
 
@@ -36,6 +37,13 @@
       <version>${javafx.version}</version>
     </dependency>
 
+    <!-- 日志 -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <!-- 测试 -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -46,6 +54,13 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!--引入此jar解决idea卡死-->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.8.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
