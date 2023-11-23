@@ -7,21 +7,22 @@
   <groupId>com.example</groupId>
   <artifactId>hello-jpackage</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>hello-jpackage</name>
+  <name>JavaFxHelloApp</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <javafx.version>17.0.2</javafx.version>
-    <junit.version>5.7.1</junit.version>
+    <javafx.version>21.0.1</javafx.version>
+    <junit.version>5.9.2</junit.version>
     <logback.version>1.3.0-alpha14</logback.version>
 
     <client.version>1.0.0</client.version>
 
     <runtime-image>runtime-image</runtime-image>
-    <main-jar-name>${project.name}-${project.version}.jar</main-jar-name>
+    <main-module>com.example.javafx</main-module>
     <main-class>com.example.javafx.HelloApplication</main-class>
+    <launcher>app</launcher>
     <package-type>PLATFORM</package-type>
   </properties>
 
@@ -70,25 +71,53 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.11.0</version>
         <configuration>
-          <source>17</source>
-          <target>17</target>
-          <release>17</release>
-          <compilerVersion>17</compilerVersion>
-          <encoding>UTF-8</encoding>
+          <source>21</source>
+          <target>21</target>
+          <release>21</release>
         </configuration>
       </plugin>
 
-      <!-- jpackage 需要指定input参数，且main-jar要在input目录中，所以将启动jar和依赖jar全部放在libs目录下 -->
+      <!-- 自动打包配置开始 -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <executions>
+          <execution>
+            <!-- Default configuration for running with: mvn clean javafx:run -->
+            <id>default-cli</id>
+            <configuration>
+              <mainClass>${main-module}/${main-class}</mainClass>
+              <launcher>${launcher}</launcher>
+              <jlinkImageName>${runtime-image}</jlinkImageName>
+              <noManPages>true</noManPages>
+              <stripDebug>true</stripDebug>
+              <noHeaderFiles>true</noHeaderFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- 自动打包配置结束 -->
+
+      <!-- 手动打包配置开始 -->
+      <!-- 主程序Jar入口 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.3.0</version>
         <configuration>
-          <outputDirectory>${project.build.directory}/libs</outputDirectory>
+          <outputDirectory>${project.build.directory}/libs/launch</outputDirectory>
+          <finalName>${project.name}</finalName>
+          <archive>
+            <manifest>
+              <mainClass>${main-class}</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
+      <!-- 依赖Jar仓库 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -101,7 +130,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/libs</outputDirectory>
+              <outputDirectory>${project.build.directory}/libs/javafx</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
@@ -111,31 +140,7 @@
           </execution>
         </executions>
       </plugin>
-
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>${main-class}</mainClass>
-        </configuration>
-        <executions>
-          <execution>
-            <id>default-cli</id>
-            <goals>
-              <goal>jlink</goal>
-            </goals>
-            <phase>prepare-package</phase>
-            <configuration>
-              <noHeaderFiles>true</noHeaderFiles>
-              <noManPages>true</noManPages>
-              <stripDebug>true</stripDebug>
-              <compress>2</compress>
-              <jlinkImageName>${runtime-image}</jlinkImageName>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      <!-- 手动打包配置结束 -->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -147,44 +152,8 @@
         </configuration>
       </plugin>
     </plugins>
-
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.github.akman</groupId>
-          <artifactId>jpackage-maven-plugin</artifactId>
-          <version>0.1.3</version>
-          <!-- 配置所有平台的公共参数以及jpackage这个execution -->
-          <configuration>
-            <toolhome>${env.JAVA_HOME}</toolhome>
-            <name>${project.name}</name>
-            <appversion>${client.version}</appversion>
-            <runtimeimage>${project.build.directory}/${runtime-image}</runtimeimage>
-            <input>${project.build.directory}/libs</input>
-            <dest>${project.build.directory}/jpackage</dest>
-            <temp>${project.build.directory}/temp</temp>
-            <mainjar>${main-jar-name}</mainjar>
-            <mainclass>${main-class}</mainclass>
-            <arguments>--opt</arguments>
-            <javaoptions>-Dfile.encoding=UTF-8 -Xms256m -Xmx512m</javaoptions>
-            <copyright>Copyright@adolphor</copyright>
-            <description>jpackage test project</description>
-            <vendor>What is Vendor?</vendor>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>jpackage</goal>
-              </goals>
-              <phase>install</phase>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 
-  <!-- 根据平台类型，配置额外的jpackage参数 -->
   <profiles>
     <profile>
       <id>build-mac</id>
@@ -195,14 +164,6 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>com.github.akman</groupId>
-            <artifactId>jpackage-maven-plugin</artifactId>
-            <configuration>
-              <type>${package-type}</type>
-              <icon>jpackage/logo/macosx/duke.icns</icon>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
@@ -216,14 +177,6 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>com.github.akman</groupId>
-            <artifactId>jpackage-maven-plugin</artifactId>
-            <configuration>
-              <type>${package-type}</type>
-              <icon>jpackage/logo/linux/duke.png</icon>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
@@ -237,14 +190,6 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>com.github.akman</groupId>
-            <artifactId>jpackage-maven-plugin</artifactId>
-            <configuration>
-              <type>${package-type}</type>
-              <icon>jpackage/logo/linux/duke.png</icon>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
