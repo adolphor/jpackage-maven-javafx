@@ -3,7 +3,11 @@
 Please checkout the prerequisites to run this application [here](https://github.com/gluonhq/gluonfx-maven-plugin#requirements).
 
 ### maven: must be 3.8.8
+
+[Maven Stable 3.8.x Release](https://maven.apache.org/download.cgi#previous-stable-3-8-x-release)
+
 ```
+$ export PATH=/Users/adolphor/Applications/maven/apache-maven-3.8.8/bin:$PATH
 $ mvn -version
 Apache Maven 3.8.8 (4c87b05d9aedce574290d1acc98575ed5eb6cd39)
 Maven home: /Users/adolphor/Applications/maven/apache-maven-3.8.8
@@ -13,11 +17,32 @@ OS name: "mac os x", version: "12.7.1", arch: "x86_64", family: "mac"
 ```
 
 ### JAVA_HOME: GraalVM 22.1.0.1, OpenJDK 17.0.3
+
+[GraalVM CE Gluon 22.1.0.1-Final](https://github.com/gluonhq/graal/releases/tag/gluon-22.1.0.1-Final)
+
 ```
+# download and install
+$ 
+$ sudo xattr -r -d com.apple.quarantine graalvm-svm-java17-darwin-gluon-22.1.0.1-Final.tar.gz
+$ tar -xzf graalvm-svm-java17-darwin-gluon-22.1.0.1-Final.tar.gz
+$ sudo mv graalvm-svm-java17-darwin-gluon-22.1.0.1-Final /Library/Java/JavaVirtualMachines
+
+# config env
+$ export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-svm-java17-darwin-gluon-22.1.0.1-Final/Contents/Home
+$ export PATH=$JAVA_HOME/bin:$PATH
+$ export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-svm-java17-darwin-gluon-22.1.0.1-Final/Contents/Home
+$ export PATH=$GRAALVM_HOME/lib/installer/bin:$PATH
+$ export PATH=$GRAALVM_HOME/lib/svm/bin:$PATH
+
+# test
 $ java -version
 openjdk version "17.0.3" 2022-04-19
 OpenJDK Runtime Environment GraalVM 22.1.0.1 (build 17.0.3+7-jvmci-22.1-b06)
 OpenJDK 64-Bit Server VM GraalVM 22.1.0.1 (build 17.0.3+7-jvmci-22.1-b06, mixed mode, sharing)
+$ gu --version
+GraalVM Updater 22.1.0.1
+$ native-image --version
+GraalVM 22.1.0.1 Java 17 CE (Java Version 17.0.3+7-jvmci-22.1-b06)
 ```
 
 ## Instructions
@@ -47,11 +72,11 @@ For more details, please check
 
 ## native-image
 ```shell
-# 编译
+# compile
 javac HelloWorld.java
-# 转换
+# build
 native-image HelloWorld
-# 运行
+# run
 ./HelloWorld
 ```
 
@@ -63,6 +88,6 @@ Here are some helpful links:
 * [configuration documentation](https://docs.gluonhq.com/#_configuration)
 * [Create native JavaFX applications using GraalVM 22 builds from Gluon](https://gluonhq.com/create-native-javafx-applications-using-graalvm-22-builds-from-gluon/)
 * [GraalVM CE Gluon downloads](https://github.com/gluonhq/graal/releases)
-* [GraalVM downloads](https://www.graalvm.org/downloads/)
+* [GraalVM CE downloads](https://github.com/graalvm/graalvm-ce-builds/releases)
 * [GluonFX Maven Plugin](https://github.com/gluonhq/gluonfx-maven-plugin)
 * [GluonFX Gradle Plugin](https://github.com/gluonhq/gluonfx-gradle-plugin)
