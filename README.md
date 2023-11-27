@@ -80,6 +80,10 @@ native-image HelloWorld
 ./HelloWorld
 ```
 
+## GraalVM VS Gluon
+
+[Cross-compile JavaFX+Swing desktop application using GraalVM](https://github.com/oracle/graal/issues/5317)
+
 ## More information
 
 Here are some helpful links:
@@ -91,3 +95,4 @@ Here are some helpful links:
 * [GraalVM CE downloads](https://github.com/graalvm/graalvm-ce-builds/releases)
 * [GluonFX Maven Plugin](https://github.com/gluonhq/gluonfx-maven-plugin)
 * [GluonFX Gradle Plugin](https://github.com/gluonhq/gluonfx-gradle-plugin)
+* [Maven plugin for GraalVM Native Image building](https://graalvm.github.io/native-build-tools/latest/maven-plugin.html)
