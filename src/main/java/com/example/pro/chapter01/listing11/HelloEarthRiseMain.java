@@ -48,16 +48,22 @@ public class HelloEarthRiseMain extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    // Reference to the Text
+    /** Reference to the Text */
     Text textRef = new Text(message);
+    // 距离顶部100像素
     textRef.setLayoutY(100);
     textRef.setTextOrigin(VPos.TOP);
     textRef.setTextAlignment(TextAlignment.JUSTIFY);
     textRef.setWrappingWidth(800);
+    // 设置文字颜色
     textRef.setFill(Color.rgb(187, 195, 107));
+    // 设置字体
     textRef.setFont(Font.font("SansSerif", FontWeight.BOLD, 24));
-    // Provides the animated scrolling behavior for the text
+
+    /** Provides the animated scrolling behavior for the text */
+    // 滚动时间：75000ms
     TranslateTransition transTransition = new TranslateTransition(new Duration(75000), textRef);
+    // 滚动距离：到Y轴负值超过文字高度就行
     transTransition.setToY(-820);
     transTransition.setInterpolator(Interpolator.LINEAR);
     transTransition.setCycleCount(Timeline.INDEFINITE);
@@ -65,13 +71,16 @@ public class HelloEarthRiseMain extends Application {
     // Create an ImageView containing the image
     Image image = new Image("file://" + PROJECT_PATH + "/src/main/resources/images/pro/chapter01/listing11/Earthrise.jpg");
     ImageView imageView = new ImageView(image);
+
     // Create a Group containing the text
     Group textGroup = new Group(textRef);
     textGroup.setLayoutX(50);
     textGroup.setLayoutY(180);
     textGroup.setClip(new Rectangle(830, 120));
+
     // Combine ImageView and Group
     Group root = new Group(imageView, textGroup);
+
     Scene scene = new Scene(root, 916, 787);
     stage.setScene(scene);
     stage.setTitle("Hello Earthrise");

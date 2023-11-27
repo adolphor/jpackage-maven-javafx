@@ -15,6 +15,9 @@ import javafx.stage.Stage;
  */
 public class HelloFX extends Application {
 
+  /**
+   * 必须覆写此方法，完成页面渲染
+   */
   @Override
   public void start(Stage stage) {
     String javaVersion = System.getProperty("java.version");
@@ -25,8 +28,13 @@ public class HelloFX extends Application {
     stage.show();
   }
 
+  /**
+   * Javafx程序入口
+   * @param args
+   */
   public static void main(String[] args) {
-    launch();
+    // 调用父类的静态启动方法
+    Application.launch(args);
   }
 
 }
