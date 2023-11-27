@@ -2,3 +2,8 @@
 .DS_Store
 target
 *.iml
+convert/classes
+convert/out
+convert/work
+HelloWord
+HelloWord.class
